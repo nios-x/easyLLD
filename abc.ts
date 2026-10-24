@@ -1,53 +1,55 @@
-class SingleTon{
-    private static instance:SingleTon|null = null;
-    private constructor(){}
-    public static getInstance(){
-        if(SingleTon.instance===null){
-            SingleTon.instance = new SingleTon();
-        }
-        return SingleTon.instance;
+class SingleTon {
+  private static instance: SingleTon | null = null;
+
+  private constructor() {}
+
+  public static getInstance(): SingleTon {
+    if (SingleTon.instance === null) {
+      SingleTon.instance = new SingleTon();
     }
-    public  getName(){
-        console.log("Instance");
-    }
+    return SingleTon.instance;
+  }
+
+  public getName(): void {
+    console.log("Instance");
+  }
 }
 
 // let s = SingleTon.getInstance();
-// s.getName()
+// s.getName();
 
 class BMW {
-    drive() {
-        console.log("Driving BMW");
-    }
+  drive(): void {
+    console.log("Driving BMW");
+  }
 }
 
 class Tesla {
-    drive() {
-        console.log("Driving Tesla");
-    }
+  drive(): void {
+    console.log("Driving Tesla");
+  }
 }
 
 class CarFactory {
-    static createCar(type:string):any {
-        if (type === "BMW") {
-            return new BMW();
-        }
-
-        if (type === "Tesla") {
-            return new Tesla();
-        }
-
-        return null;
+  static createCar(type: string): any {
+    if (type === "BMW") {
+      return new BMW();
     }
+
+    if (type === "Tesla") {
+      return new Tesla();
+    }
+
+    return null;
+  }
 }
 
-// // Use the factory
+// Use the factory
 // const car1 = CarFactory.createCar("BMW");
 // car1.drive();
-
+//
 // const car2 = CarFactory.createCar("Tesla");
 // car2.drive();
-
 
 // class PC {
 //   constructor(
@@ -57,49 +59,43 @@ class CarFactory {
 //     public wifi: boolean = false
 //   ) {}
 // }
-
+//
 // class PCBuilder {
 //   private pc = new PC();
-
+//
 //   setRAM(ram: number): this {
 //     this.pc.ram = ram;
 //     return this;
 //   }
-
+//
 //   setStorage(storage: number): this {
 //     this.pc.storage = storage;
 //     return this;
 //   }
-
+//
 //   setGraphics(graphics: string): this {
 //     this.pc.graphics = graphics;
 //     return this;
 //   }
-
+//
 //   setWifi(wifi: boolean): this {
 //     this.pc.wifi = wifi;
 //     return this;
 //   }
-
+//
 //   build(): PC {
 //     return this.pc;
 //   }
 // }
-
+//
 // const pc = new PCBuilder()
 //   .setRAM(16)
 //   .setStorage(512)
 //   .setGraphics("RTX 4060")
 //   .setWifi(true)
 //   .build();
-
+//
 // console.log(pc);
-
-
-
-
-
-
 
 interface PaymentStrategy {
   pay(amount: number): void;
@@ -133,19 +129,6 @@ payment1.pay(500);
 const payment2 = new Payment(new CardPayment());
 payment2.pay(1000);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 interface Observer {
   update(video: string): void;
 }
@@ -166,9 +149,7 @@ class YouTubeChannel {
   }
 
   unsubscribe(observer: Observer): void {
-    this.subscribers = this.subscribers.filter(
-      sub => sub !== observer
-    );
+    this.subscribers = this.subscribers.filter((sub) => sub !== observer);
   }
 
   uploadVideo(video: string): void {
@@ -189,6 +170,5 @@ channel.subscribe(s1);
 channel.subscribe(s2);
 
 channel.uploadVideo("Learn TypeScript");
-
 
 
