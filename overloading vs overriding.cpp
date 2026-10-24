@@ -38,3 +38,5 @@ int main(){
 }
 
 
+
+https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem

@@ -61,3 +61,6 @@ The Facade Design Pattern is a structural design pattern that provides a single,
 
 ### Proxy Pattern: 
 Provides a substitute or placeholder for another object to control access to it.
+
+
+https://blog.algomaster.io/p/how-to-answer-a-lld-interview-problem
