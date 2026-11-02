@@ -4,6 +4,8 @@
 #include <vector>
 using namespace std;
 
+// Thread-safe counter using a mutex (see 9.atomic.cpp for the std::atomic version).
+// mutable lets the const get() still lock the mutex.
 class Counter {
     mutable mutex m;
     long long value = 0;

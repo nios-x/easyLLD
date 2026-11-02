@@ -18,7 +18,7 @@ Builder is a creational design pattern that lets you construct complex objects s
 
 ### Strategy
 
-Definition: The Strategy Pattern is a behavioral design pattern that lets you define multiple algorithms, put each one in a separate class, and switch between them at runtime.
+The Strategy Pattern is a behavioral design pattern that lets you define multiple algorithms, put each one in a separate class, and switch between them at runtime.
 
 ```ts
 const navigator = new Navigator(new CarStrategy());
@@ -92,7 +92,7 @@ The State Pattern is a behavioral design pattern that allows an object to change
 | Pattern | Main purpose | Example |
 | --- | --- | --- |
 | State | Behavior changes with internal state | ATM authentication |
-| Strategy | Choose an interchangeable algorithm | UPI vs Stripe |
+| Strategy | Choose an interchangeable algorithm | UPI vs Card payment |
 | Observer | Notify multiple objects of changes | YouTube subscribers |
 
 ### Command
@@ -159,7 +159,18 @@ class Grandpa extends Handler {
     console.log("Grandpa approved!");
   }
 }
+
+// Build the chain: Dad -> Mom -> Grandpa
+// setNext returns the handler it was given, so calls can be chained.
+const dad = new Dad();
+dad.setNext(new Mom()).setNext(new Grandpa());
+
+dad.approve(50);   // Dad approved!
+dad.approve(300);  // Mom approved!
+dad.approve(1000); // Grandpa approved!
 ```
+
+**Real-world example:** an API request passing through auth, rate limiting and validation handlers, like middleware.
 
 ```ts
 class RequestHandlerApp {

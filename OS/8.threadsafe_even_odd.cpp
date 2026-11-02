@@ -8,24 +8,30 @@ using namespace std;
 condition_variable cv;
 mutex m1;
 
-using namespace std;
-
+const int LIMIT = 100000;
 int cnt = 0;
 
-void incOdd(){
-    while(cnt<100000){
+// Two threads take turns: one prints the odd numbers, the other the even numbers.
+// cnt is only read while holding m1 (reading it outside the lock is a data race).
+// The predicate also checks LIMIT, so a waiting thread wakes up and stops at the end
+// instead of printing LIMIT+1.
+
+void incOdd(){   // runs when cnt is even, prints 1, 3, 5, ...
+    while(true){
         unique_lock<mutex> lock(m1);
-        cv.wait(lock, []{ return !(cnt&1); });
+        cv.wait(lock, []{ return !(cnt&1) || cnt>=LIMIT; });
+        if(cnt>=LIMIT) break;
         cnt++;
         cout<<cnt<<"\n";
         cv.notify_all();
     }
 }
 
-void incEven(){
-    while(cnt<100000){
+void incEven(){   // runs when cnt is odd, prints 2, 4, 6, ...
+    while(true){
         unique_lock<mutex> lock(m1);
-        cv.wait(lock, []{ return (cnt&1); });
+        cv.wait(lock, []{ return (cnt&1) || cnt>=LIMIT; });
+        if(cnt>=LIMIT) break;
         cnt++;
         cout<<cnt<<"\n";
         cv.notify_all();

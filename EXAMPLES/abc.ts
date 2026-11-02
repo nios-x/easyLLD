@@ -1,7 +1,9 @@
+// ---------- Singleton: only one instance, one global access point ----------
+
 class SingleTon {
   private static instance: SingleTon | null = null;
 
-  private constructor() {}
+  private constructor() {} // private, so `new SingleTon()` is not allowed outside
 
   public static getInstance(): SingleTon {
     if (SingleTon.instance === null) {
@@ -17,21 +19,28 @@ class SingleTon {
 
 // let s = SingleTon.getInstance();
 // s.getName();
+// SingleTon.getInstance() === SingleTon.getInstance(); // true
 
-class BMW {
+// ---------- Factory: the caller asks for a type, the factory decides which class to create ----------
+
+interface Car {
+  drive(): void;
+}
+
+class BMW implements Car {
   drive(): void {
     console.log("Driving BMW");
   }
 }
 
-class Tesla {
+class Tesla implements Car {
   drive(): void {
     console.log("Driving Tesla");
   }
 }
 
 class CarFactory {
-  static createCar(type: string): any {
+  static createCar(type: string): Car | null {
     if (type === "BMW") {
       return new BMW();
     }
@@ -46,10 +55,12 @@ class CarFactory {
 
 // Use the factory
 // const car1 = CarFactory.createCar("BMW");
-// car1.drive();
+// car1?.drive();
 //
 // const car2 = CarFactory.createCar("Tesla");
-// car2.drive();
+// car2?.drive();
+
+// ---------- Builder: build a complex object step by step ----------
 
 // class PC {
 //   constructor(
@@ -97,6 +108,8 @@ class CarFactory {
 //
 // console.log(pc);
 
+// ---------- Strategy: swap the algorithm (payment method) at runtime ----------
+
 interface PaymentStrategy {
   pay(amount: number): void;
 }
@@ -128,6 +141,8 @@ payment1.pay(500);
 // Choose Card
 const payment2 = new Payment(new CardPayment());
 payment2.pay(1000);
+
+// ---------- Observer: notify every subscriber when something changes ----------
 
 interface Observer {
   update(video: string): void;
@@ -170,5 +185,3 @@ channel.subscribe(s1);
 channel.subscribe(s2);
 
 channel.uploadVideo("Learn TypeScript");
-
-

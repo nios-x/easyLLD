@@ -1,16 +1,19 @@
 #include <iostream>
 #include <thread>
-#include <mutex>
+#include <atomic>
 #include <vector>
 using namespace std;
 
+// std::atomic makes ++ and -- one indivisible step, so no mutex is needed.
+// Same counter as 99.examples.cpp, but lock-free and faster.
+// Use atomic for a single variable; use a mutex when several variables
+// must change together.
 class Counter {
-    mutable mutex m;
-    long long value = 0;
+    atomic<long long> value{0};
 public:
-    void increment() { lock_guard<mutex> lg(m); ++value; }
-    void decrement() { lock_guard<mutex> lg(m); --value; }
-    long long get() const { lock_guard<mutex> lg(m); return value; }
+    void increment() { ++value; }                  // same as value.fetch_add(1)
+    void decrement() { --value; }                  // same as value.fetch_sub(1)
+    long long get() const { return value.load(); }
 };
 
 int main() {
@@ -23,5 +26,5 @@ int main() {
         });
 
     for (auto& th : threads) th.join();
-    cout << c.get() << endl;   // always 400000
+    cout << c.get() << endl;   // always 400000 (with a plain long long it would often be less)
 }
