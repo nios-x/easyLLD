@@ -1,0 +1,1 @@
+Smart pointers are objects that automatically manage dynamically allocated memory.

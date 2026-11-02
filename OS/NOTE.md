@@ -122,3 +122,30 @@ If the predicate is false, the call releases the mutex and puts the thread to sl
 ## Thread Pool
 
 A Thread Pool is a collection of reusable worker threads that execute multiple tasks without creating a new thread for every task.
+
+RAII is a C++ technique where resources are acquired when an object is created and automatically released when that object is destroyed.
+
+
+Smart pointers are objects that automatically manage dynamically allocated memory.
+2. Three types of smart pointers
+C++ has three major smart pointers:
+Smart pointer	Meaning
+unique_ptr	Only one owner
+shared_ptr	Multiple owners
+weak_ptr	Non-owning reference to shared memory
+
+    unique_ptr<int> p = make_unique<int>(10);
+
+3. unique_ptr
+One resource = One owner.
+    unique_ptr<int> p = make_unique<int>(10);
+
+4. shared_ptr
+    One resource = Multiple owners.
+
+    shared_ptr<int> p1 = make_shared<int>(100);
+    shared_ptr<int> p2 = p1;
+    cout << p1.use_count();
+
+Object Pool in C++
+An Object Pool is a creational design pattern where we create and store a fixed number of objects in advance and reuse them whenever needed instead of creating and destroying objects repeatedly.
